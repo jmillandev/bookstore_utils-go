@@ -1,4 +1,4 @@
-module github.com/jgmc3012/bookstore_utils-go
+module github.com/jmillandev/bookstore_utils-go
 
 go 1.17
 
