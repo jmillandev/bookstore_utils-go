@@ -1,6 +1,7 @@
 package rest_errors
 
 import (
+	"errors"
 	"net/http"
 	"testing"
 
@@ -8,11 +9,14 @@ import (
 )
 
 func TestNewInternalServerError(t *testing.T) {
-	err := NewInternalServerError("this is the error message")
+	err := NewInternalServerError("this is the error message", errors.New("Conection refused"))
 	assert.NotNil(t, err)
 	assert.EqualValues(t, http.StatusInternalServerError, err.Status)
 	assert.EqualValues(t, "this is the error message", err.Message)
 	assert.EqualValues(t, "internal_server_error", err.Error)
+	assert.NotNil(t, err.Causes)
+	assert.EqualValues(t, 1, len(err.Causes))
+	assert.EqualValues(t, "Conection refused", err.Causes[0])
 }
 
 func TestNewBadRequestError(t *testing.T) {
