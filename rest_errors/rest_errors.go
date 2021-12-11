@@ -1,6 +1,7 @@
 package rest_errors
 
 import (
+	"encoding/json"
 	"net/http"
 )
 
@@ -9,6 +10,14 @@ type RestErr struct {
 	Status  int           `json:"status"`
 	Error   string        `json:"error"`
 	Causes  []interface{} `json:"causes"`
+}
+
+func NewRestErrorFromBytes(bytes []byte) (*RestErr, error) {
+	var apiErr RestErr
+	if err := json.Unmarshal(bytes, &apiErr); err != nil {
+		return nil, err
+	}
+	return &apiErr, nil
 }
 
 func NewBadRequestError(message string) *RestErr {
