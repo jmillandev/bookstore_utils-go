@@ -75,7 +75,7 @@ func GetLogger() bookstoreLogger {
 	return log
 }
 
-func (l logger) Printf(v ...interface{}) {
+func (l logger) Print(v ...interface{}) {
 	Info(fmt.Sprint("%v", v))
 }
 
